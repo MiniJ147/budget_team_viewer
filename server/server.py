@@ -3,7 +3,7 @@ import socket
 #inilizes socket
 sock = socket.socket()
 
-PORT = 8080
+PORT = 5050
 
 EXAMPLE_DATA = ['68.129.180.01','28.400.180.01','70.129.120.01']
 
@@ -28,8 +28,13 @@ def run():
 
         #loops through every ip in connected and sends to the host
         for ip in EXAMPLE_DATA:
-            connection.send(ip.encode('utf-8'))
+            connection.send(ip.encode("utf-8"))
+            connection.send("\n".encode("utf-8"))
 
+        #FIXME
+        message2 = connection.send()
+        connection.send(message2.encode("utf-8"))
+        
         connection.close()
 
 if __name__ == "__main__":

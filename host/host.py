@@ -1,7 +1,7 @@
 import socket
 
 ip = "127.0.0.1"
-port = 8080
+port = 5050
 
 def startup():
     # creates a new socket
@@ -14,10 +14,15 @@ def startup():
     message = "Hello.".encode("utf-8")
     client.send(message)
     
-    # recivees and prints a message from the server
-    response = client.recv(1024)
-    print(response.decode("utf-8"))
+    # recives and prints a message from the server
+    data = client.recv(1024)
+    response = int.from_bytes(data, "big")
+    print("Number of connections: " + str(response))
     
+    #recieves and prints the ip addresses of the connections from the server
+    response2 = client.recv(1024)
+    print("Current connections:\n" + response2.decode("utf-8"))
+
     #closes the connection
     client.close()
 
