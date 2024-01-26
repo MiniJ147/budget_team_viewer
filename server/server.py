@@ -3,9 +3,21 @@ import socket
 #inilizes socket
 sock = socket.socket()
 
-PORT = 5050
+PORT = 8080
 
 EXAMPLE_DATA = ['68.129.180.01','28.400.180.01','70.129.120.01']
+
+IMPORTANT_MESSAGE = '''
+==========BTV - Server==========
+Information:
+ -version: 0.04v
+
+About:
+ Used as the middleman to handle
+ request between host and clients
+
+================================
+'''
 
 def startup():
     #starts server on 127.0.0.1:5000
@@ -45,7 +57,7 @@ def run():
         connection.close()
 
 if __name__ == "__main__":
-    print("Hello From Server")
+    print(IMPORTANT_MESSAGE)
     startup()
 
 '''def TCP_send_str(s, msg):

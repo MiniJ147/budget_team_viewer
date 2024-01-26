@@ -1,7 +1,20 @@
 import socket
 
 ip = "127.0.0.1"
-port = 5050
+port = 8080
+
+IMPORTANT_MESSAGE = '''
+===========BTV - Host===========
+Information:
+ -version: 0.03v
+
+About:
+ Used to request commands from
+ the server to control 
+ clients computers.
+
+================================
+'''
 
 def startup():
     # creates a new socket
@@ -28,5 +41,6 @@ def startup():
     client.close()
 
 if __name__ == "__main__":
+    print(IMPORTANT_MESSAGE)
     startup()
 
