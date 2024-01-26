@@ -10,18 +10,19 @@ def startup():
     # connects to the server
     client.connect((ip, port))
     
-    # sends a messgae to the server
-    message = "Hello.".encode("utf-8")
-    client.send(message)
-    
     # recives and prints a message from the server
     data = client.recv(1024)
-    response = int.from_bytes(data, "big")
-    print("Number of connections: " + str(response))
+    num_connections = int.from_bytes(data, "big")
+    print("Number of connections: " + str(num_connections))
+
+    #send status
+    client.send("SUCESS".encode("utf-8"))
+
+    #recive ips
+    server_ips = client.recv(1024).decode("utf-8")
+    client.send("SUCESS".encode("utf-8"))
     
-    #recieves and prints the ip addresses of the connections from the server
-    response2 = client.recv(1024)
-    print("Current connections:\n" + response2.decode("utf-8"))
+    print(server_ips)
 
     #closes the connection
     client.close()

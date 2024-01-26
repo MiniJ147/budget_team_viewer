@@ -26,18 +26,31 @@ def run():
         number_of_connections = len(EXAMPLE_DATA)
         connection.send(number_of_connections.to_bytes(2,"big")) #sending int as bytes
 
-        #loops through every ip in connected and sends to the host
-        for ip in EXAMPLE_DATA:
-            connection.send(ip.encode("utf-8"))
-            connection.send("\n".encode("utf-8"))
+        print(connection.recv(1024).decode("utf-8"))
 
-        #FIXME
-        message2 = connection.send()
-        connection.send(message2.encode("utf-8"))
+
+        '''make it so we send in one network request instead of muitple. One big str'''
+        #loops through every ip in connected and sends to the host
+        ip_list_str = ""
+        for ip in EXAMPLE_DATA:
+            ip_list_str += ip + '\n,'
+        
+        #parses out last ,
+        ip_list_str = ip_list_str[:-1] 
+
+        #sending one big string and recieving result message
+        connection.send(ip_list_str.encode("utf-8"))
+        print(connection.recv(1024).decode("utf-8"))
         
         connection.close()
 
 if __name__ == "__main__":
     print("Hello From Server")
-
     startup()
+
+'''def TCP_send_str(s, msg):
+    s.send(msg.encode("utf-8"))
+
+def TCP_recv_str(s):
+    msg = s.decode("utf-8")
+    return msg'''
