@@ -43,7 +43,7 @@ def run():
         #loops through every ip in connected and sends to the host
         ip_list_str = ""
         for ip in EXAMPLE_DATA:
-            ip_list_str += ip + '\n,'
+            ip_list_str += ip + ','
         
         #parses out last ,
         ip_list_str = ip_list_str[:-1]
