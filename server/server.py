@@ -1,4 +1,9 @@
 import socket
+import sys
+sys.path.append('../')
+
+from utils.tcp import *
+from utils.log import *
 
 #inilizes socket
 sock = socket.socket()
@@ -29,16 +34,17 @@ def startup():
     run()
 
 def run():
+    LOG("TEST")
     while 1:
-        connection, address = sock.accept() #accepts incoming connection
+        con, address = sock.accept() #accepts incoming connection
 
         print("\n[Recieved Connection] ",address)
 
         #send the size of current connections
         number_of_connections = len(EXAMPLE_DATA)
-        connection.send(number_of_connections.to_bytes(2,"big")) #sending int as bytes
+        con.send(number_of_connections.to_bytes(2,"big")) #sending int as bytes
 
-        print(connection.recv(1024).decode("utf-8"))
+        print(tcp_recv_str(con))
 
 
         '''make it so we send in one network request instead of muitple. One big str'''
@@ -51,10 +57,11 @@ def run():
         ip_list_str = ip_list_str[:-1] 
 
         #sending one big string and recieving result message
-        connection.send(ip_list_str.encode("utf-8"))
-        print(connection.recv(1024).decode("utf-8"))
+        tcp_send_str(con,ip_list_str)
         
-        connection.close()
+        print(tcp_recv_str(con))
+        
+        con.close()
 
 if __name__ == "__main__":
     print(IMPORTANT_MESSAGE)

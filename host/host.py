@@ -1,4 +1,9 @@
 import socket
+import sys
+
+sys.path.append('../')
+
+from utils.tcp import *
 
 ip = "127.0.0.1"
 port = 8080
@@ -6,7 +11,7 @@ port = 8080
 IMPORTANT_MESSAGE = '''
 ===========BTV - Host===========
 Information:
- -version: 0.03v
+ -version: 0.04v
 
 About:
  Used to request commands from
@@ -18,27 +23,27 @@ About:
 
 def startup():
     # creates a new socket
-    client = socket.socket()
+    con = socket.socket()
     
     # connects to the server
-    client.connect((ip, port))
+    con.connect((ip, port))
     
     # recives and prints a message from the server
-    data = client.recv(1024)
+    data = tcp_recv(con)
     num_connections = int.from_bytes(data, "big")
     print("Number of connections: " + str(num_connections))
 
     #send status
-    client.send("SUCESS".encode("utf-8"))
+    tcp_status_send(con, STATUS_SUCCESS)
 
     #recive ips
-    server_ips = client.recv(1024).decode("utf-8")
-    client.send("SUCESS".encode("utf-8"))
+    server_ips = tcp_recv_str(con)
+    tcp_status_send(con, STATUS_SUCCESS)
     
     print(server_ips)
 
     #closes the connection
-    client.close()
+    con.close()
 
 if __name__ == "__main__":
     print(IMPORTANT_MESSAGE)
