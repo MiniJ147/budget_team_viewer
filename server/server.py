@@ -39,13 +39,6 @@ def run():
 
         print("\n[Recieved Connection] ",address)
 
-        #send the size of current connections
-        number_of_connections = len(EXAMPLE_DATA)
-        con.send(number_of_connections.to_bytes(2,"big")) #sending int as bytes
-
-        print(tcp_recv_str(con))
-
-
         '''make it so we send in one network request instead of muitple. One big str'''
         #loops through every ip in connected and sends to the host
         ip_list_str = ""
@@ -53,7 +46,8 @@ def run():
             ip_list_str += ip + '\n,'
         
         #parses out last ,
-        ip_list_str = ip_list_str[:-1] 
+        ip_list_str = ip_list_str[:-1]
+        ip_list_str += 'X' #add escape char 
 
         #sending one big string and recieving result message
         tcp_send_str(con,ip_list_str)
@@ -65,10 +59,3 @@ def run():
 if __name__ == "__main__":
     print(IMPORTANT_MESSAGE)
     startup()
-
-'''def TCP_send_str(s, msg):
-    s.send(msg.encode("utf-8"))
-
-def TCP_recv_str(s):
-    msg = s.decode("utf-8")
-    return msg'''

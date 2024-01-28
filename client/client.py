@@ -1,7 +1,9 @@
 import sys
 sys.path.append('../')
 
+from utils.tcp import *
+from utils.log import *
 
 
 if __name__ == "__main__":
-    print("Hello client!")
+    LOG('Hello From the Client')
