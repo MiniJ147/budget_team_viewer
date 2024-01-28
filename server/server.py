@@ -34,7 +34,6 @@ def startup():
     run()
 
 def run():
-    LOG("TEST")
     while 1:
         con, address = sock.accept() #accepts incoming connection
 
